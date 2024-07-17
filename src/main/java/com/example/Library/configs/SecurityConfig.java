@@ -48,6 +48,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/login/**","/registration/**","/logout/**").permitAll()
+                        .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/book/allBooks").hasAnyRole("LIBRARIAN","READER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

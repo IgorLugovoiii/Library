@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      lang="en">
+<head>
+    <title>Books</title>
+</head>
+<body>
+<h1>All Books</h1>
+<div sec:authorize="hasRole('LIBRARIAN')">
+    <a th:href="@{/book/addBook}">Add New Book</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Release date</th>
+        <th>Language</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.name}">Name</td>
+        <td th:text="${book.genre}">Genre</td>
+        <td th:text="${book.releaseDate}">Release date</td>
+        <td th:text="${book.language}">Language</td>
+        <td th:text="${book.description}">Description</td>
+        <td th:text="${book.quantity}">Quantity</td>
+        <td sec:authorize="hasRole('READER')">
+            <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post" style="display:inline">
+                <button type="submit">Yes, delete it</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/}">Back to Home</a>
+</body>
+</html>
