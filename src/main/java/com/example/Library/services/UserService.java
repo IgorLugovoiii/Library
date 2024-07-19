@@ -2,6 +2,7 @@ package com.example.Library.services;
 
 import com.example.Library.models.User;
 import com.example.Library.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+    @Transactional
     public User createUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
@@ -30,5 +32,8 @@ public class UserService {
     }
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 }

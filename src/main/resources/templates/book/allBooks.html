@@ -31,9 +31,14 @@
         <td th:text="${book.description}">Description</td>
         <td th:text="${book.quantity}">Quantity</td>
         <td sec:authorize="hasRole('READER')">
-            <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post" style="display:inline">
-                <button type="submit">Yes, delete it</button>
+            <form th:action="@{/book/borrow-book(id=${book.id})}" method="post" style="display:inline">
+                <button type="submit" th:disabled="${book.quantity == 0}">Borrow</button>
             </form>
+        </td>
+        <td sec:authorize="hasRole('LIBRARIAN')">
+        <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post" style="display:inline">
+            <button type="submit">Yes, delete it</button>
+        </form>
         </td>
     </tr>
     </tbody>

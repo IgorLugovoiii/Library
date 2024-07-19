@@ -39,7 +39,7 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(5);
     }
     @Bean
@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/","/login/**","/registration/**","/logout/**").permitAll()
                         .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
                         .requestMatchers("/book/allBooks").hasAnyRole("LIBRARIAN","READER")
+                        .requestMatchers("/book/borrow-book/**").hasRole("READER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
