@@ -34,6 +34,9 @@
             <form th:action="@{/book/borrow-book(id=${book.id})}" method="post" style="display:inline">
                 <button type="submit" th:disabled="${book.quantity == 0}">Borrow</button>
             </form>
+            <form th:action="@{/book/return-book(id=${book.id})}" method="post" style="display:inline">
+                <button type="submit" >Return</button>
+            </form>
         </td>
         <td sec:authorize="hasRole('LIBRARIAN')">
         <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post" style="display:inline">

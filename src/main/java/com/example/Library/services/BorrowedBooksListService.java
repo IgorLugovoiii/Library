@@ -30,6 +30,9 @@ public class BorrowedBooksListService {
     public List<BorrowedBooksList> findByReaderId(User user){
         return borrowedBooksListRepository.findByUser(user);
     }
-
+    public List<BorrowedBooksList> findByUserAndBook(User user, Book book){
+        return borrowedBooksListRepository.findByUserAndBook(user,book);
+    }
+    public void delete(BorrowedBooksList borrowedBooksList){borrowedBooksListRepository.delete(borrowedBooksList);}
 
 }

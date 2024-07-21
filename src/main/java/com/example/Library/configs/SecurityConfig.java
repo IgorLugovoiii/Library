@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/","/login/**","/registration/**","/logout/**").permitAll()
                         .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
                         .requestMatchers("/book/allBooks").hasAnyRole("LIBRARIAN","READER")
-                        .requestMatchers("/book/borrow-book/**").hasRole("READER")
+                        .requestMatchers("/book/borrow-book/**","/book/return-book/**").hasRole("READER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
