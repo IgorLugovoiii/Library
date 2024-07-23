@@ -27,7 +27,7 @@ public class BorrowedBooksListService {
     public void deleteById(Long id){
         borrowedBooksListRepository.deleteById(id);
     }
-    public List<BorrowedBooksList> findByReaderId(User user){
+    public List<BorrowedBooksList> findByReader(User user){
         return borrowedBooksListRepository.findByUser(user);
     }
     public List<BorrowedBooksList> findByUserAndBook(User user, Book book){

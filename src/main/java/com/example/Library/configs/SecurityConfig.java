@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/login/**","/registration/**","/logout/**","/static/**","/css/**").permitAll()
                         .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
-                        .requestMatchers("/book/allBooks").hasAnyRole("LIBRARIAN","READER")
+                        .requestMatchers("/book/allBooks","/profile/**").hasAnyRole("LIBRARIAN","READER")
                         .requestMatchers("/book/borrow-book/**","/book/return-book/**").hasRole("READER")
                         .anyRequest().authenticated()
                 )
