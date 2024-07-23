@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Collections;
@@ -47,7 +46,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/login/**","/registration/**","/logout/**").permitAll()
+                        .requestMatchers("/","/login/**","/registration/**","/logout/**","/static/**","/css/**").permitAll()
                         .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
                         .requestMatchers("/book/allBooks").hasAnyRole("LIBRARIAN","READER")
                         .requestMatchers("/book/borrow-book/**","/book/return-book/**").hasRole("READER")

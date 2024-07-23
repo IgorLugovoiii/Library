@@ -4,6 +4,7 @@
       lang="en">
 <head>
     <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
 <h1>All Books</h1>
@@ -20,6 +21,7 @@
         <th>Description</th>
         <th>Quantity</th>
         <th>Actions</th>
+        <th sec:authorize="hasRole('READER')">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -34,8 +36,10 @@
             <form th:action="@{/book/borrow-book(id=${book.id})}" method="post" style="display:inline">
                 <button type="submit" th:disabled="${book.quantity == 0}">Borrow</button>
             </form>
+        </td>
+        <td>
             <form th:action="@{/book/return-book(id=${book.id})}" method="post" style="display:inline">
-                <button type="submit" >Return</button>
+            <button type="submit" >Return</button>
             </form>
         </td>
         <td sec:authorize="hasRole('LIBRARIAN')">
