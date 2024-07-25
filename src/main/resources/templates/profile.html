@@ -11,6 +11,7 @@
   <p>Email: <span th:text="${user.email}">email@example.com</span></p>
   <p>Role: <span th:text="${user.role}">Role</span></p>
 </div>
+<a th:href="@{/profile/changePassword}">Change Password</a>
 <h2 sec:authorize="hasRole('READER')">Borrowed Books</h2>
 <table sec:authorize="hasRole('READER')">
   <thead>

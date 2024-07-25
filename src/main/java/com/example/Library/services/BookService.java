@@ -27,12 +27,6 @@ public class BookService {
     public List<Book> findByName(String name){
         return bookRepository.findByName(name);
     }
-    public List<Book> findByGenre(String genre){
-        return bookRepository.findByGenre(genre);
-    }
-    public List<Book> findByLanguage(String language){
-        return bookRepository.findByLanguage(language);
-    }
     public List<Book> findAllBooks(){
         return bookRepository.findAll();
     }

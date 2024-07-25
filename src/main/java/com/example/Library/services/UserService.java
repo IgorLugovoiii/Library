@@ -24,6 +24,9 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
     public Optional<User> findById(Long id){
         return userRepository.findById(id);
     }

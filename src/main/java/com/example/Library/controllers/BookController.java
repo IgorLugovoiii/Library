@@ -130,19 +130,4 @@ public class BookController {
         }
         return "redirect:/book/allBooks";
     }
-
-//    @GetMapping("/booksByName")
-//    public String findByName(Model model, @RequestParam("name") String name){
-//        List<Book> books = bookService.findByName(name);
-//        model.addAttribute("books", books);
-//        return "book/allBooks";
-//    }
-    @GetMapping("genre/{genre}")
-    public List<Book> findByGenre(String genre){
-        return bookService.findByGenre(genre);
-    }
-    @GetMapping("/language/{language}")
-    public List<Book> findByLanguage(String language){
-        return bookService.findByLanguage(language);
-    }
 }
