@@ -20,9 +20,9 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     @Transactional
-    public User createUser(User user){
+    public void createUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
     public void updateUser(User user) {
         userRepository.save(user);
