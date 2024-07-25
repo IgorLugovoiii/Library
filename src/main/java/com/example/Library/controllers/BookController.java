@@ -40,8 +40,14 @@ public class BookController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
     @GetMapping("/allBooks")
-    public String findAllBooks(Model model){
-        List<Book> books = bookService.findAllBooks();
+    public String findAllBooks(@RequestParam(value = "name", required = false) String name, Model model){
+        List<Book> books;
+        if(name != null && !name.isEmpty()){
+            books = bookService.findByName(name);
+        }
+        else{
+            books = bookService.findAllBooks();
+        }
         model.addAttribute("books",books);
         return "book/allBooks";
     }
@@ -125,10 +131,12 @@ public class BookController {
         return "redirect:/book/allBooks";
     }
 
-    @GetMapping("/booksByName")
-    public List<Book> findByName(String name){
-        return bookService.findByName(name);
-    }
+//    @GetMapping("/booksByName")
+//    public String findByName(Model model, @RequestParam("name") String name){
+//        List<Book> books = bookService.findByName(name);
+//        model.addAttribute("books", books);
+//        return "book/allBooks";
+//    }
     @GetMapping("genre/{genre}")
     public List<Book> findByGenre(String genre){
         return bookService.findByGenre(genre);
