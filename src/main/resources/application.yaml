@@ -8,6 +8,17 @@ spring:
     hibernate:
       ddl-auto:  update # ??? validate, ??? create-drop
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: qeadzc4065@gmail.com
+    password: qomu ndly fwvj peoa
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 server:
   port: 8080
@@ -16,3 +27,4 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
+
