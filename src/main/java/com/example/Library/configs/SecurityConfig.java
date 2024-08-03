@@ -46,7 +46,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/login/**","/registration/**","/logout/**","/static/**","/css/**").permitAll()
+                        .requestMatchers("/","/login/**","/registration/**","/logout/**","/static/**","/css/**","/uploads/**").permitAll()
                         .requestMatchers("/book/addBook","/book/delete/**").hasRole("LIBRARIAN")
                         .requestMatchers("/book/allBooks","/profile/**","/profile/changePassword").hasAnyRole("LIBRARIAN","READER")
                         .requestMatchers("/book/borrow-book/**","/book/return-book/**").hasRole("READER")

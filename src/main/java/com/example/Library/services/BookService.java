@@ -18,8 +18,8 @@ public class BookService {
     public Optional<Book> findById(Long id){
         return bookRepository.findById(id);
     }
-    public Book addBook(Book book){
-        return bookRepository.save(book);
+    public void addBook(Book book){
+        bookRepository.save(book);
     }
     public void deleteById(Long id){
         bookRepository.deleteById(id);

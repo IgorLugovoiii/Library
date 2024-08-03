@@ -15,10 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/book")
@@ -26,12 +33,14 @@ public class BookController {
     private final BookService bookService;
     private final UserService userService;
     private final BorrowedBooksListService borrowedBooksListService;
+
     @Autowired
     public BookController(BookService bookService,UserService userService,
-                          BorrowedBooksListService borrowedBooksListService ){
+                          BorrowedBooksListService borrowedBooksListService){
         this.bookService = bookService;
         this.userService = userService;
         this.borrowedBooksListService = borrowedBooksListService;
+
     }
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -57,7 +66,22 @@ public class BookController {
         return "book/addBook";
     }
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute Book book){
+    public String addBook(@ModelAttribute Book book,@RequestParam("images") MultipartFile[] imageFiles) {
+        List<String> imageUrls = new ArrayList<>();
+        for(MultipartFile imageFile:imageFiles ) {
+            if (!imageFile.isEmpty()) {
+                try {
+                    String imageName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+                    Path imagePath = Paths.get("uploads/" + imageName);
+                    Files.createDirectories(imagePath.getParent());
+                    Files.write(imagePath, imageFile.getBytes());
+                    imageUrls.add("/uploads/" + imageName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        book.setImagesUrl(imageUrls);
         bookService.addBook(book);
         return "redirect:/book/allBooks";
     }
