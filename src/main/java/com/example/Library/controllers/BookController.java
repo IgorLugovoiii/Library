@@ -72,7 +72,7 @@ public class BookController {
             if (!imageFile.isEmpty()) {
                 try {
                     String imageName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-                    Path imagePath = Paths.get("uploads/" + imageName);
+                    Path imagePath = Paths.get("src/main/resources/static/uploads/" + imageName);
                     Files.createDirectories(imagePath.getParent());
                     Files.write(imagePath, imageFile.getBytes());
                     imageUrls.add("/uploads/" + imageName);
@@ -92,6 +92,15 @@ public class BookController {
     }
     @PostMapping("/delete/{id}")
     public String deleteBookById(@PathVariable Long id){
+        Book book = bookService.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+        for(String imageUrl: book.getImagesUrl()){
+            Path imagePath = Paths.get("src/main/resources/static" + imageUrl);
+            try{
+                Files.deleteIfExists(imagePath);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
         bookService.deleteById(id);
         return "redirect:/book/allBooks";
     }
@@ -153,5 +162,11 @@ public class BookController {
             }
         }
         return "redirect:/book/allBooks";
+    }
+    @GetMapping("/view/{id}")
+    public String viewBookDetails(@PathVariable Long id, Model model) {
+        Book book = bookService.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+        model.addAttribute("book", book);
+        return "book/viewBook";
     }
 }
